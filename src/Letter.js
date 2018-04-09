@@ -1,24 +1,24 @@
+// letter is the letter from the current word, which gets called in Word.js
 function Letter(letter) {
   this.letter = letter;
   this.revealed = false;
 }
 
+// used to reveal an empty space, or the letter if it was correctly guessed
 Letter.prototype.revealCharacter = function() {
   if (!this.revealed) {
-    return '_';
-  } else {
-    return this.letter;
+    return console.log('_');
   }
+  return console.log(this.letter);
 }
 
+// 
 Letter.prototype.checkLetter = function(guess) {
   if (guess === this.letter) {
     console.log('true');
     this.revealed = true;
   }
-  else {
-    console.log('false');
-  }
+  this.revealCharacter();
 }
 
 module.exports = { Letter: Letter };
