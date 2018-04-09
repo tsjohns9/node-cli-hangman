@@ -6,19 +6,22 @@ function Letter(letter) {
 
 // used to reveal an empty space, or the letter if it was correctly guessed
 Letter.prototype.revealCharacter = function() {
-  if (!this.revealed) {
-    return console.log('_');
+  if (this.letter === ' ') {
+    return ' ';
   }
-  return console.log(this.letter);
+  else if (!this.revealed) {
+    this.mistakes--;
+    return '_';
+  }
+  return this.letter;
 }
 
-// 
+// updates the status of the letter to see if it has been guessed or not
 Letter.prototype.checkLetter = function(guess) {
   if (guess === this.letter) {
-    console.log('true');
     this.revealed = true;
   }
-  this.revealCharacter();
+  return this.revealCharacter();
 }
 
 module.exports = { Letter: Letter };
