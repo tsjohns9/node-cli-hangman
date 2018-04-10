@@ -14,24 +14,32 @@ var tmp = '';
 // gets a random word for the game
 var randomWord = function() {
   return gameWords.words[Math.floor(Math.random() * gameWords.words.length)];
-}
+};
 
 // initializes the game
 var currentGame = new Word(randomWord());
+
+// array which contains all the letters
 var letterArr = currentGame.letterArr;
+
+// creates each letter object
 currentGame.addLetter();
+
 console.log(currentGame.letterArr);
 
 // reveals the correct guesses on the word
 var updateWord = function(guess) {
+  // clears out the string to update it with the string based on the guess.
   tmp = '';
+
+  // checks the guess against each letter
   for (var i = 0; i < letterArr.length; i++) {
     tmp += letterArr[i].checkLetter(guess) + ' ';
   }
-  return tmp;
-}
 
-// console.log(tmp);
+  // contains the string with its revealed and hidden characters
+  return tmp;
+};
 
 var playGame = function() {
   if (mistakes > 0) {

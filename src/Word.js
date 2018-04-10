@@ -3,6 +3,7 @@ var Letter = letterFile.Letter;
 
 // currentWord is the random word for the current game
 function Word(currentWord) {
+  // stores an array of each Letter object
   this.letterArr = [];
   this.currentWord = currentWord;
 }
