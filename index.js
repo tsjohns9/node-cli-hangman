@@ -2,7 +2,7 @@ var inquirer = require("inquirer");
 var gameWords = require('./src/game-words');
 var Word = require('./src/word');
 
-var tmp = '_';
+var hiddenWord;
 
 // each game gets a total of 6 guesses
 var mistakes = 6;
@@ -32,30 +32,42 @@ console.log('letterArr: ', letterArr);
 // reveals the correct guesses on the word
 var updateWord = function(guess) {
   // clears out the string to update it with the string based on the guess.
-  tmp = '';
+  hiddenWord = '';
 
   // checks the guess against each letter
   for (var i = 0; i < letterArr.length; i++) {
-    tmp += letterArr[i].checkLetter(guess) + ' ';
+    hiddenWord += letterArr[i].checkLetter(guess) + ' ';
   }
 
   // contains the string with its revealed and hidden characters
-  return console.log(tmp);
+  return hiddenWord;
 };
 
+// stores the word with its hidden and revealed characters.
+// done this way so that the hidden word can be shown during the prompt to the user
+hiddenWord = updateWord();
+
 var playGame = function() {
+
+  // game is over if mistakes are less than 0
   if (mistakes > 0) {
 
-    if (tmp.includes('_')) {
+    // if the string does not include '_', then the player won
+    if (hiddenWord.includes('_')) {
+
       inquirer
         .prompt([
           {
             type: "input",
-            message: "Guess a letter!\n",
+            message: "Guess a letter!\n" + hiddenWord + "\n",
             name: "letter"
           }
         ])
+
+        // returns user input
         .then(function (data) {
+
+          // displays the revealed and hidden characters
           updateWord(data.letter);
 
           //used to check if a guess was incorrect
@@ -63,14 +75,18 @@ var playGame = function() {
             wrongGuess.push(data.letter);
             mistakes--;
           }
+
           console.log('Remaining guesses: ', mistakes);
           playGame();
         });
-    } else {
-      console.log('You Won!');
+
+    } else { // end hiddenWord.includes('_') conditional
+      console.log('You got the word right! Here\'s your next word.');
+      // game = new Word(randomWord());
+      // game.addLetter();
     }
 
-  } else {
+  } else { // end mistakes > 0 conditional
     console.log('game over');
   }
 };
