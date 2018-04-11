@@ -27,7 +27,7 @@ var letterArr = game.letterArr;
 // creates each letter object
 game.addLetter();
 
-console.log('letterArr: ', letterArr);
+console.log(letterArr);
 
 // reveals the correct guesses on the word
 var updateWord = function(guess) {
@@ -81,9 +81,15 @@ var playGame = function() {
         });
 
     } else { // end hiddenWord.includes('_') conditional
-      console.log('You got the word right! Here\'s your next word.');
-      // game = new Word(randomWord());
-      // game.addLetter();
+        console.log('You got the word right! Here\'s your next word.');
+        // sets game to default values so that a new game can automatically begin
+        hiddenWord = null;
+        game = new Word(randomWord());
+        letterArr = game.letterArr;
+        game.addLetter();
+        hiddenWord = updateWord();
+        mistakes = 6;
+        playGame();
     }
 
   } else { // end mistakes > 0 conditional
