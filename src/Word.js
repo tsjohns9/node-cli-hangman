@@ -1,5 +1,4 @@
-var letterFile = require('./letter');
-var Letter = letterFile.Letter;
+var Letter = require('./letter');
 
 // currentWord is the random word for the current game
 function Word(currentWord) {
@@ -20,4 +19,4 @@ Word.prototype.addLetter = function() {
   }
 }
 
-module.exports = { Word: Word };
+module.exports = Word;

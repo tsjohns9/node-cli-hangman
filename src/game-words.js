@@ -1,4 +1,4 @@
-exports.words = [
+words = [
   'Link',
   'Zelda',
   'Ganondorf',
@@ -35,3 +35,5 @@ exports.words = [
   'Biggorn Sword',
   'Triforce'
 ];
+
+module.exports = words;

@@ -34,7 +34,7 @@ Letter.prototype.checkLetter = function(guess) {
   return this.revealCharacter();
 }
 
-module.exports = { Letter: Letter };
+module.exports = Letter;
 
 // the user will guess a letter. that guess gets passed into this object.
 // if the guess is the same as the letter in the object, then the letter is revealed

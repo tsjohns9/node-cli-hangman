@@ -1,31 +1,33 @@
 var inquirer = require("inquirer");
 var gameWords = require('./src/game-words');
-var wordFile = require('./src/word');
-var Word = wordFile.Word;
+var Word = require('./src/word');
 
+var tmp = '_';
+
+// each game gets a total of 6 guesses
 var mistakes = 6;
+
+// tracks incorrect guesses. does not subtract the same incorrect guess from your total mistakes
+var wrongGuess = [];
 
 // stores the users guess
 var guess = process.argv[2];
 
-// This contains the string the the revealed and hidden characters.
-var tmp = '';
-
 // gets a random word for the game
 var randomWord = function() {
-  return gameWords.words[Math.floor(Math.random() * gameWords.words.length)];
+  return gameWords[Math.floor(Math.random() * gameWords.length)];
 };
 
 // initializes the game
-var currentGame = new Word(randomWord());
+var game = new Word(randomWord());
 
 // array which contains all the letters
-var letterArr = currentGame.letterArr;
+var letterArr = game.letterArr;
 
 // creates each letter object
-currentGame.addLetter();
+game.addLetter();
 
-console.log(currentGame.letterArr);
+console.log('letterArr: ', letterArr);
 
 // reveals the correct guesses on the word
 var updateWord = function(guess) {
@@ -38,23 +40,36 @@ var updateWord = function(guess) {
   }
 
   // contains the string with its revealed and hidden characters
-  return tmp;
+  return console.log(tmp);
 };
 
 var playGame = function() {
   if (mistakes > 0) {
-    inquirer
-      .prompt([
-        {
-          type: "input",
-          message: "Guess a letter!\n",
-          name: "letter"
-        }
-      ])
-      .then(function (data) {
-        console.log(updateWord(data.letter));
-        playGame();
-      });
+
+    if (tmp.includes('_')) {
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "Guess a letter!\n",
+            name: "letter"
+          }
+        ])
+        .then(function (data) {
+          updateWord(data.letter);
+
+          //used to check if a guess was incorrect
+          if (!game.currentWord.includes(data.letter) && !wrongGuess.includes(data.letter)) {
+            wrongGuess.push(data.letter);
+            mistakes--;
+          }
+          console.log('Remaining guesses: ', mistakes);
+          playGame();
+        });
+    } else {
+      console.log('You Won!');
+    }
+
   } else {
     console.log('game over');
   }
