@@ -27,7 +27,8 @@ var letterArr = game.letterArr;
 // creates each letter object
 game.addLetter();
 
-console.log(letterArr);
+// remove the comment, and you will be able to see the word
+// console.log(letterArr);
 
 // reveals the correct guesses on the word
 var updateWord = function(guess) {
@@ -74,14 +75,17 @@ var playGame = function() {
           if (!game.currentWord.includes(data.letter) && !wrongGuess.includes(data.letter)) {
             wrongGuess.push(data.letter);
             mistakes--;
+            console.log('INCORRECT!' + '\n');
+            console.log(mistakes + ' guesses remaining' + '\n');
           }
 
-          console.log('Remaining guesses: ', mistakes);
           playGame();
         });
 
     } else { // end hiddenWord.includes('_') conditional
-        console.log('You got the word right! Here\'s your next word.');
+
+      console.log('You got the word right! Here\'s your next word.' + '\n');
+
         // sets game to default values so that a new game can automatically begin
         hiddenWord = null;
         game = new Word(randomWord());
@@ -93,7 +97,8 @@ var playGame = function() {
     }
 
   } else { // end mistakes > 0 conditional
-    console.log('game over');
+
+    console.log('Game over. The word was ' + game.currentWord);
   }
 };
 
