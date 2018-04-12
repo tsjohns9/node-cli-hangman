@@ -36,4 +36,9 @@ words = [
   'Triforce'
 ];
 
-module.exports = words;
+// gets a random word for the game
+var randomWord = function () {
+  return words[Math.floor(Math.random() * words.length)];
+};
+
+module.exports = randomWord;
